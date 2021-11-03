@@ -4,7 +4,7 @@ export interface FileEntry {
    */
   name: string;
   /**
-   * The file full path
+   * The file fulll path
    */
   path: string;
 }
