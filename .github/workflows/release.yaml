@@ -1,9 +1,6 @@
 name: Release new version
 
-on:
-  push:
-    tags:
-      - "v*.*.*"
+on: push
 
 jobs:
   release:
@@ -21,11 +18,18 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: "16.x"
-          registry-url: "https://2325-2804-431-c7ee-c1a1-3cdb-9e8e-9555-b8a2.ngrok.io"
+          registry-url: "https://registry.npmjs.org"
       - run: |
           cd core
           deno run --unstable -A package.ts ${{ env.RELEASE_VERSION }}
-          cd npm
+
+      - name: Build pipelinit core package publish
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16.x"
+          registry-url: "https://df77-2804-431-c7ef-1102-bbe3-352e-5343-df64.ngrok.io"
+      - run: |
+          cd core/npm
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
